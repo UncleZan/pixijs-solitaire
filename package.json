@@ -1,0 +1,24 @@
+{
+    "name": "pixijs-solitaire",
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "start": "npm run assets && vite --open",
+        "assets": "node compile-assets.js",
+        "build": "tsc && vite build",
+        "preview": "npm run build && vite preview --open",
+        "deploy": "npm run build && playco-web deploy ./dist --name pixijs-solitaire"
+    },
+    "dependencies": {
+        "@pixi/ui": "^0.5.6",
+        "assetpack": "file:../../../tools/assetpack",
+        "gsap": "^3.11.4",
+        "pixi.js": "^7.0.5",
+        "typed-signals": "^2.5.0"
+    },
+    "devDependencies": {
+        "@play-co/web-cli": "^1.1.1",
+        "typescript": "^4.9.3",
+        "vite": "^4.0.0"
+    }
+}
