@@ -1,22 +1,25 @@
-import { CardColor as CardColour, CardSuit } from "../data/CardData";
+import {CardColor, CardSuit} from '../data/CardData';
 
 /**
- * Map the numeric value of the card to its correspondent string value. 
- * @param value - The numeric value of the card 
+ * Map the numeric value of the card to its correspondent string value.
+ * @param value - The numeric value of the card
  */
 export function getCardId(value: number): string
 {
     let id: string;
 
-    switch (value) {
-        case 11: id = 'J'; 
+    switch (value)
+    {
+        case 1: id = 'A';
             break;
-        case 12: id = 'Q'; 
+        case 11: id = 'J';
             break;
-        case 13: id = 'K'; 
+        case 12: id = 'Q';
+            break;
+        case 13: id = 'K';
             break;
     
-        default: id = `${value}`
+        default: id = `${value}`;
             break;
     }
 
@@ -24,11 +27,13 @@ export function getCardId(value: number): string
 }
 
 /**
- * Map the suit of the card to its correspondent colour string value. 
- * @param value - The string value of the card colour 
+ * Maps the suit of the card to its correspondent color string value.
+ * Clubs and Spades are black, Hearts and Diamonds are red.
+ * @param value - The string value of the card color.
  */
-export function getCardColour(suit: CardSuit): CardColour
+export function getCardColor(suit: CardSuit): CardColor
 {
     if (suit === 'clubs' || suit === 'spades') return 'black';
-    else return 'red';
+
+    return 'red';
 }

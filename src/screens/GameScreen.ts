@@ -1,43 +1,39 @@
-import { Container } from 'pixi.js';
-import gsap from 'gsap';
-import { PlayingTable } from '../game/PlayingTable';
+import {Container} from 'pixi.js';
 
-const pt: PlayingTable = new PlayingTable();
-
-export class GameScreen extends Container {
-    public static assetBundles = ['game', 'fonts'];
+import {Game} from '../game/Game';
+import {tween} from '../utils/tweens';
+export class GameScreen extends Container
+{
+    public static assetBundles = ['game', 'common'];
     public w!: number;
     public h!: number;
 
-    constructor() {
-        super();
+    private game = new Game();
 
+    public update(delta: number)
+    {
+        this.game.update(delta);
     }
 
-    public update() {
-        //
-    }
-
-    public resize(w: number, h: number) {
-        pt.resize(w, h);
+    public resize(w: number, h: number)
+    {
+        this.game.resize(w, h);
         this.w = w;
         this.h = h;
     }
 
-    public async show() {
-        gsap.killTweensOf(this);
+    public async show()
+    {
         this.alpha = 0;
 
-        pt.init();
-        this.addChild(pt.view);
-        
-        this.resize(this.w, this.h);
+        this.game.init();
+        this.addChild(this.game.view);
 
-        await gsap.to(this, { alpha: 1, duration: 0.2, ease: 'linear' });
+        await tween(this, {alpha: 1, duration: 0.2, ease: 'linear'});
     }
 
-    public async hide() {
-        gsap.killTweensOf(this);
-        await gsap.to(this, { alpha: 0, duration: 0.2, ease: 'linear' });
+    public async hide()
+    {
+        await tween(this, {alpha: 0, duration: 0.2, ease: 'linear'});
     }
 }

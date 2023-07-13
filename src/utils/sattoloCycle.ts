@@ -1,7 +1,7 @@
 /**
  * Randomly shuffle an array so that each element ends up in a new position.
  * @param arr - The array to be shuffled.
- * @returns 
+ * @returns
  */
 export function sattoloCycle<T>(arr: T[]): T[]
 {

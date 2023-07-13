@@ -1,25 +1,28 @@
-import { Application } from 'pixi.js';
-import { initAssets } from './assets';
-import { navigation } from './navigation';
-import { GameScreen } from './screens/GameScreen';
-import { HomeScreen } from './screens/HomeScreen';
-import { LoadScreen } from './screens/LoadScreen';
-import { TiledBackground } from './ui/TiledBackground';
-import { getUrlParam } from './utils/getUrlParams';
-import { requestFullScreen } from './utils/requestFullScreen';
+import {Application} from 'pixi.js';
+
+import {initAssets} from './assets';
+import {model} from './model/Model';
+import {navigation} from './navigation';
+import {GameScreen} from './screens/GameScreen';
+import {HomeScreen} from './screens/HomeScreen';
+import {LoadScreen} from './screens/LoadScreen';
+import {TiledBackground} from './ui/TiledBackground';
+import {getUrlParam} from './utils/getUrlParams';
+import {setOrientation} from './utils/orientation';
 
 /** The PixiJS app Application instance, shared across the project */
 export const app = new Application<HTMLCanvasElement>({
     resolution: Math.max(window.devicePixelRatio, 2),
-    backgroundColor: 0xffffff,
+    backgroundColor: 0xFFFFFF,
 });
 
 /** Set up a resize function for the app */
-function resize() {
+function resize()
+{
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    const minWidth = 375;
-    const minHeight = 700;
+    const minWidth = windowWidth > windowHeight ? 722 : 512;
+    const minHeight = windowWidth > windowHeight ? 512 : 722;
 
     // Calculate renderer and canvas sizes based on current dimensions
     const scaleX = windowWidth < minWidth ? minWidth / windowWidth : 1;
@@ -33,13 +36,16 @@ function resize() {
     app.renderer.view.style.height = `${windowHeight}px`;
     window.scrollTo(0, 0);
 
+    setOrientation(width > height ? 'landscape' : 'portrait');
+
     // Update renderer  and navigation screens dimensions
     app.renderer.resize(width, height);
     navigation.resize(width, height);
 }
 
 /** Setup app and initialise assets */
-async function init() {
+async function init()
+{
     // Add pixi canvas element (app.view) to the document's body
     document.body.appendChild(app.view);
 
@@ -52,21 +58,23 @@ async function init() {
     // Setup assets bundles (see assets.ts) and start up loading everything in background
     await initAssets();
 
+
     navigation.setBackground(TiledBackground);
 
     await navigation.showScreen(LoadScreen);
-
-    document.addEventListener('pointerdown', () =>
-    {
-        requestFullScreen();
-    });
+    model.loadState();
 
     // Show first screen - go straight to game if '?game' param is present in url
-    if (getUrlParam('game') !== null) {
+    if (getUrlParam('game') !== null)
+    {
         await navigation.showScreen(GameScreen);
-    } else if (getUrlParam('load') !== null) {
+    }
+    else if (getUrlParam('load') !== null)
+    {
         await navigation.showScreen(LoadScreen);
-    } else {
+    }
+    else
+    {
         await navigation.showScreen(HomeScreen);
     }
 }

@@ -1,48 +1,58 @@
 
-export class Timer  {
+export class Timer
+{
     private time = 0;
     private lastTime = 0;
     private running = false;
     private paused = false;
 
-    public reset() {
+    public reset()
+    {
         this.running = false;
         this.time = 0;
     }
 
-    public start() {
+    public start()
+    {
         this.paused = false;
         this.running = true;
         this.lastTime = performance.now();
     }
 
-    public stop() {
+    public stop()
+    {
         this.running = false;
         this.paused = false;
     }
 
-    public update() {
+    public update()
+    {
         if (!this.running) return;
         const now = performance.now();
         const elapsed = now - this.lastTime;
+
         this.lastTime = now;
         if (this.paused) return;
         this.time += elapsed;
     }
 
-    public isRunning() {
+    public isRunning()
+    {
         return this.running;
     }
 
-    public getTime() {
+    public getTime()
+    {
         return this.time;
     }
 
-    public pause() {
+    public pause()
+    {
         this.paused = true;
     }
 
-    public resume() {
+    public resume()
+    {
         this.paused = false;
     }
 }
