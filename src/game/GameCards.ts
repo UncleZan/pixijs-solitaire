@@ -11,6 +11,7 @@ export class GameCards
     public view = new Container();
     
     private all: Card[] = [];
+    /** TODO: Temporary, needed for debug. */
     private game: Game;
 
     constructor(game: Game)

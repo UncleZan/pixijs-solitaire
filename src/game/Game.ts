@@ -43,7 +43,7 @@ export class Game
         
         this.gameCards = new GameCards(this);
         // Assign a copy of the cards list to the deck
-        this.deck = new Deck();
+        this.deck = new Deck(this.gameCards.cards.slice());
 
         this.gameStacks = new GameStacks(this);
         this.suitsStacks = new SuitStacks();

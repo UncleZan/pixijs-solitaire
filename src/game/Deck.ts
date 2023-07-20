@@ -31,7 +31,7 @@ export class Deck
     /** Flags whther the deck is currently resetting to its beginning state. */
     private resetting = false;
 
-    constructor()
+    constructor(cards: Card[])
     {
         this.deckTray = Sprite.from('card-frame');
 
@@ -55,6 +55,7 @@ export class Deck
         this.interactionArea.on('pointertap', this.tap.bind(this));
 
         this.view.addChild(this.deckTray, this.dealtTray);
+        this.cards = cards;
     }
 
     /**
@@ -76,7 +77,7 @@ export class Deck
             card.view.parent.addChild(card.view);
         }
         
-        this.cards[this.cards.length - 1].view.shadowEnabled = true;
+        if (this.cards.length) this.cards[this.cards.length - 1].view.shadowEnabled = true;
     }
 
     /** Handles the state of the cards on the dealt tray. */
